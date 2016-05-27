@@ -22,3 +22,4 @@ Code.
 3. EulerAlgorithm.java - solves the problem for question 21 & returns a value.
 4. AppRepository.java & AppServiceImple.java = to connect to embedded hsql database.
 5. AppRequest.java & AppResponse.java = use entity based annotations to serialize & deserialize.
+6. IdExistsException.java - custom exception class to send http 409 in case of previously seen requests.
