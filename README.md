@@ -14,3 +14,11 @@ Design.
 3. REST service receives the request & calculates the solution to Project EUler 21 & returns response in Json.
 4. if request has been processed before then throw http code 409.
 5. Used HSQL database & spring hibernate for persistance.
+
+Code.
+
+1. Sender.java uses springs REST template to build a request & issue post.
+2. AppController.java - controller to receive post requets & forward them to the Euler algorithm processor.
+3. EulerAlgorithm.java - solves the problem for question 21 & returns a value.
+4. AppRepository.java & AppServiceImple.java = to connect to embedded hsql database.
+5. AppRequest.java & AppResponse.java = use entity based annotations to serialize & deserialize.
