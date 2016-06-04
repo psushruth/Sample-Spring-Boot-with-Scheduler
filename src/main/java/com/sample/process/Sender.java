@@ -1,18 +1,19 @@
 package com.sample.process;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sample.process.domain.AppRequest;
 import com.sample.process.domain.AppResponse;
+import com.sample.process.exception.IdExistsException;
 
 @Service
 public class Sender {
@@ -33,21 +34,44 @@ public class Sender {
 	{
 	    AppRequest request = new AppRequest();
 	    
-	    request.setId(String.valueOf(count.incrementAndGet()));
+	    request.setMissionId(String.valueOf(count.incrementAndGet()));
+	    
+	    if ( request.getMissionId().equalsIgnoreCase("2"))
+	    	request.setMissionId("1");
 	    int seed = random.nextInt(max - min + 1) + min;
 	    request.setSeed(seed);
-	    System.out.println("Request: MissionId="+request.getId()+", Seed="+request.getSeed());
+	    try {
+			System.out.println("Request="+ mapper.writeValueAsString(request));
+		} catch (JsonProcessingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	     
 	    RestTemplate restTemplate = new RestTemplate();
-	    AppResponse result = restTemplate.postForObject(url, request, AppResponse.class);
+	    ResponseEntity<AppResponse> result = null; 
+	    boolean isExists = false;
 	    
-	    System.out.println("Response: answer="+result.getAnswer());
 	    try {
-			System.out.println("Response json="+mapper.writeValueAsString(result));
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			System.out.println("bad json");
-		}
+	    	result = restTemplate.postForEntity(url, request, AppResponse.class);
+	    } catch (HttpClientErrorException e) {
+	    	if ( e.getMessage().contains("409"))
+	    		isExists = true;
+	    }
+	    System.out.println("Response:");
+	    
+	    if ( isExists )
+	    	System.out.println("HTTP code= 409");
+	    else {
+	    	System.out.println("HTTP code="+ result.getStatusCode());
+	    	try {
+				System.out.println("Body="+mapper.writeValueAsString(result.getBody()));
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				System.out.println("bad json");
+			}
+	    }
+	    
+	    System.out.println("\n\n");
 	    
 	}
 } 
