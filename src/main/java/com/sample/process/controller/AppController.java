@@ -42,7 +42,7 @@ public class AppController {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleUserAlreadyExistsException(IdExistsException e) {
-        return e.getMessage();
+        return "";
     }
 
 }
