@@ -25,10 +25,10 @@ public class AppServiceImpl implements AppService {
     @Override
     @Transactional
     public AppRequest save(@NotNull @Valid final AppRequest request) {
-        AppRequest existing = repository.findOne(request.getId());
+        AppRequest existing = repository.findOne(request.getMissionId());
         if (existing != null) {
             throw new IdExistsException(
-                    String.format("Mission id :"+request.getId()+" already exists"));
+                    String.format("Mission id :"+request.getMissionId()+" already exists"));
         }
         return repository.save(request);
     }
