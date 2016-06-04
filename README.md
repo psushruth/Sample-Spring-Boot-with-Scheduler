@@ -25,7 +25,7 @@ Code.
 6. IdExistsException.java - custom exception class to send http 409 in case of previously seen requests.
 
 Sample Run.
-`
+
  .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -65,4 +65,4 @@ Body={"answer":97402}
 Request={"missionId":"5","seed":15036}
 Response:
 HTTP code=200
-Body={"answer":80106} `
+Body={"answer":80106} 
