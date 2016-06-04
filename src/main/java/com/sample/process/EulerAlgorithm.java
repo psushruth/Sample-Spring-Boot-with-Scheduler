@@ -21,18 +21,15 @@ public class EulerAlgorithm {
 	public long findSum(int seed) {
 		Long sum = 0L;
 		for (int i = 1; i < seed; i++) {
-			long currentSum = calculateDivisor(i);
+			long divSum = calculateDivisorSum(i);
 			
-			if ( currentSum != i ) {
-				long newSum = calculateDivisor(currentSum);
-				if ( newSum == currentSum )
+			if ( divSum != i && i == calculateDivisorSum(divSum))
 					sum = sum + i;
-			}
 		}
 		return sum;
 	}
 	
-	private long calculateDivisor(long n) {
+	private long calculateDivisorSum(long n) {
 		long sum = 0;
 		for (int i = 1; i < n; i++) {
 			if (n % i == 0)
