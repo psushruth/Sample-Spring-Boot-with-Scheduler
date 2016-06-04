@@ -11,18 +11,18 @@ public class AppRequest {
 	@Id
     @NotNull
     @Column(name = "id", nullable = false, updatable = false)
-	String id;
+	String missionId;
 	
 	@NotNull
     @Column(name = "seed", nullable = false)
 	int seed;
 	
-	public void setId(String missionId) {
-		this.id = missionId;
+	public void setMissionId(String missionId) {
+		this.missionId = missionId;
 	}
 	
-	public String getId() {
-		return id;
+	public String getMissionId() {
+		return missionId;
 	}
 	
 	public void setSeed(int seed) {
